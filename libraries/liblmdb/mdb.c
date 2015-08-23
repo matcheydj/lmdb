@@ -8923,7 +8923,8 @@ mdb_env_copyfd1(MDB_env *env, HANDLE fd)
 	my.mc_toggle = 0;
 	my.mc_env = env;
 	my.mc_fd = fd;
-	THREAD_CREATE(thr, mdb_env_copythr, &my);
+	CreateThread(thr, mdb_env_copythr, my.mc_wbuf, my.mc_wlen, my.mc_olen, my.mc_next_pgno, my.mc_status, my.mc_new, my.mc_toggle, my.mc_env, my.mc_fd);
+	//THREAD_CREATE(thr, mdb_env_copythr, &my);
 
 	rc = mdb_txn_begin(env, NULL, MDB_RDONLY, &txn);
 	if (rc)
